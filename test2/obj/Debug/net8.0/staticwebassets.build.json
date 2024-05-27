@@ -1,0 +1,39 @@
+{
+  "Version": 1,
+  "Hash": "V+4rR+jotM+56cV9lTujddBPCUWJD2IBvRwbkApUx54=",
+  "Source": "test2",
+  "BasePath": "_content/test2",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "test2\\wwwroot",
+      "Source": "test2",
+      "ContentRoot": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\",
+      "BasePath": "_content/test2",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\c\\7680b415-4147-46c5-9861-885a11c021d1.png",
+      "SourceId": "test2",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\",
+      "BasePath": "_content/test2",
+      "RelativePath": "c/7680b415-4147-46c5-9861-885a11c021d1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\c\\7680b415-4147-46c5-9861-885a11c021d1.png"
+    }
+  ]
+}
