@@ -18,8 +18,22 @@ namespace Test.Data.Models
 
         public int Machines { get; set; }
 
-        public List<Checklist> checklists { get; set; }
+        public bool VerifyHeat { get; set; }
 
+        public bool VerifySwitchers { get; set; }
+
+        public bool VerifyBackbone { get; set; }
+
+        public bool VerifyVentilation { get; set; }
+
+        public bool VerifySecurity { get; set; }
+
+        public bool VerifyStorage { get; set; }
+
+        public List<Checklist> Checklists { get; set; }
+
+        [MaxLength(255)]
+        public string QRCodeUrl { get; set; }
 
     }
 }

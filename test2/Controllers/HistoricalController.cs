@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Test.Data;
 using Test.Data.Models;
@@ -18,85 +20,126 @@ namespace test2.Controllers
             _db = db;
         }
 
-        // POST: api/Historical/UploadUrls
+        // GET: api/Historical
+        [HttpGet]
+        public async Task<IActionResult> GetHistoricals()
+        {
+            var historicals = await _db.Historical.Include(h => h.User).Include(h => h.Checklist).ToListAsync();
+            return Ok(historicals);
+        }
 
+        // GET: api/Historical/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetHistorical(int id)
+        {
+            var historical = await _db.Historical.Include(h => h.User).Include(h => h.Checklist).FirstOrDefaultAsync(h => h.Id == id);
+
+            if (historical == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(historical);
+        }
+
+        // POST: api/Historical
+        // POST: api/Historical
         [HttpPost]
-        [Route("UploadUrls")]
-
-        public async Task<IActionResult> UploadUrls([FromBody] UrlUploadModel model)
+        public async Task<IActionResult> CreateHistorical([FromBody] HistoricalDto historicalDto)
         {
-            try
+            if (historicalDto == null)
             {
-                // Validate model
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                // Store URLs in the database
-                var historicalRecord = new Historical
-                {
-                    Date = DateTime.UtcNow.ToString("yyyy-MM-dd"),
-                    Hour = DateTime.UtcNow.ToString("HH:mm:ss"),
-                    Id_user = model.UserId,
-                    PicturesFolderPath = model.PicturesFolderPath
-                };
-                _db.Historical.Add(historicalRecord);
-                await _db.SaveChangesAsync();
-
-                return Ok("URLs uploaded successfully.");
+                return BadRequest("Invalid historical data.");
             }
-            catch (Exception ex)
+
+          
+
+            // Get the user by ID
+            var user = await _db.User.FindAsync(historicalDto.Id_user);
+            if (user == null)
             {
-                // Log the error
-                Console.WriteLine($"Error uploading URLs: {ex.Message}");
-                return StatusCode(500, "An error occurred while uploading URLs.");
+                return NotFound("User not found.");
             }
+
+            // Get the checklist by ID
+            var checklist = await _db.Checkliste.FindAsync(historicalDto.ChecklistId);
+            if (checklist == null)
+            {
+                return NotFound("Checklist not found.");
+            }
+
+            // Map HistoricalDto to Historical entity
+            var historical = new Historical
+            {
+                DateTime = DateTime.Now,
+                Id_user = user.Id_user ?? 0, // Use null-coalescing operator to provide a default value
+                ChecklistId = checklist.IdChecklist,
+                PicturesFolderPath = historicalDto.PicturesFolderPath
+            };
+
+            await _db.Historical.AddAsync(historical);
+            await _db.SaveChangesAsync();
+
+            return Ok(historical);
         }
-        /*
-                // POST: api/Historical/UploadImages
-                [HttpPost("UploadImages")]
-                public async Task<IActionResult> UploadImages([FromForm] ImageUploadModel model)
-                {
-                    try
-                    {
-                        // Validate model and extract image URLs
-                        if (!ModelState.IsValid)
-                        {
-                            return BadRequest(ModelState);
-                        }
 
-                        // Store URLs in the database
-                        foreach (var imageUrl in model.ImageUrls)
-                        {
-                            var image = new Image
-                            {
-                                Url = imageUrl,
-                                UploadedAt = DateTime.UtcNow
-                            };
-                            _db.Images.Add(image);
-                        }
-                        await _db.SaveChangesAsync();
-
-                        return Ok("Images uploaded successfully.");
-                    }
-                    catch (Exception ex)
-                    {
-                        // Log the error
-                        Console.WriteLine($"Error uploading images: {ex.Message}");
-                        return StatusCode(500, "An error occurred while uploading images.");
-                    }
-                }
-            }*/
-
-        public class ImageUploadModel
+        // PUT: api/Historical/5
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateHistorical(int id, [FromBody] Historical historical)
         {
-            public string[] ImageUrls { get; set; }
+            if (id != historical.Id)
+            {
+                return BadRequest("Historical ID mismatch.");
+            }
+
+            var existingHistorical = await _db.Historical.FindAsync(id);
+            if (existingHistorical == null)
+            {
+                return NotFound();
+            }
+
+            existingHistorical.PicturesFolderPath = historical.PicturesFolderPath;
+            // Update other fields as needed
+
+            _db.Historical.Update(existingHistorical);
+            await _db.SaveChangesAsync();
+
+            return Ok(existingHistorical);
         }
-        public class UrlUploadModel
+
+        // DELETE: api/Historical/5
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteHistorical(int id)
         {
-            public int UserId { get; set; } // User ID associated with the URLs
-            public string PicturesFolderPath { get; set; } // Folder path containing pictures
+            var historical = await _db.Historical.FindAsync(id);
+            if (historical == null)
+            {
+                return NotFound();
+            }
+
+            _db.Historical.Remove(historical);
+            await _db.SaveChangesAsync();
+
+            return Ok();
         }
     }
+
+
+    public class HistoricalDto
+    {
+        
+        public int Id { get; set; }  // Added primary key
+
+        public DateTime DateTime { get; set; }  // Combined date and time
+   
+        public int Id_user { get; set; }
+    
+        public int ChecklistId { get; set; }
+
+        public string PicturesFolderPath { get; set; }
+    }
+
+
 }

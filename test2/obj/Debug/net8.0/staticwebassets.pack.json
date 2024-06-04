@@ -5,6 +5,210 @@
       "PackagePath": "staticwebassets\\c\\7680b415-4147-46c5-9861-885a11c021d1.png"
     },
     {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Backbone_20240603222001.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Backbone_20240603222001.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Backbone_20240603223627.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Backbone_20240603223627.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Backbone_20240603224839.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Backbone_20240603224839.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Backbone_20240603225327.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Backbone_20240603225327.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Backbone_20240603225339.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Backbone_20240603225339.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Backbone_20240603233107.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Backbone_20240603233107.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Backbone_20240603233531.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Backbone_20240603233531.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240602220924.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240602220924.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240602223220.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240602223220.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240602223422.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240602223422.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240602225900.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240602225900.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240602230159.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240602230159.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240602235350.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240602235350.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240603222001.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240603222001.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240603222734.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240603222734.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240603223609.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240603223609.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240603225300.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240603225300.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Heat_20240603232749.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Heat_20240603232749.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Security_20240602230614.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Security_20240602230614.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Security_20240603222015.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Security_20240603222015.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Security_20240603233540.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Security_20240603233540.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Storage_20240603222036.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Storage_20240603222036.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Storage_20240603233106.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Storage_20240603233106.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Storage_20240603233550.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Storage_20240603233550.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Switchers_20240603222001.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Switchers_20240603222001.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Switchers_20240603223619.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Switchers_20240603223619.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Switchers_20240603225321.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Switchers_20240603225321.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Switchers_20240603233100.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Switchers_20240603233100.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Switchers_20240603233518.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Switchers_20240603233518.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Ventilation_20240603222008.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Ventilation_20240603222008.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Ventilation_20240603222029.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Ventilation_20240603222029.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_2_Ventilation_20240603233107.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_2_Ventilation_20240603233107.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Backbone_20240604000022.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Backbone_20240604000022.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Backbone_20240604153240.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Backbone_20240604153240.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Heat_20240603235956.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Heat_20240603235956.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Heat_20240604153158.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Heat_20240604153158.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Security_20240604000038.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Security_20240604000038.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Security_20240604153306.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Security_20240604153306.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Storage_20240604000042.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Storage_20240604000042.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Storage_20240604153327.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Storage_20240604153327.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Switchers_20240604000014.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Switchers_20240604000014.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Switchers_20240604153158.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Switchers_20240604153158.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Switchers_20240604153247.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Switchers_20240604153247.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Ventilation_20240604000029.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Ventilation_20240604000029.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\images\\checklists\\room_3_Ventilation_20240604153256.png",
+      "PackagePath": "staticwebassets\\images\\checklists\\room_3_Ventilation_20240604153256.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\qrcodes\\203e7383-01b8-4b22-b7eb-ccf1e0f2d2fe.png",
+      "PackagePath": "staticwebassets\\qrcodes\\203e7383-01b8-4b22-b7eb-ccf1e0f2d2fe.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\qrcodes\\65dcdb5e-363f-49f6-a75b-30067b2a806b.png",
+      "PackagePath": "staticwebassets\\qrcodes\\65dcdb5e-363f-49f6-a75b-30067b2a806b.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\qrcodes\\67c19950-6d9b-4a66-973c-49b0d7134752.png",
+      "PackagePath": "staticwebassets\\qrcodes\\67c19950-6d9b-4a66-973c-49b0d7134752.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\qrcodes\\9808679d-e462-4eca-99ec-370f124fe75c.png",
+      "PackagePath": "staticwebassets\\qrcodes\\9808679d-e462-4eca-99ec-370f124fe75c.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\qrcodes\\9ad4e7ba-02d2-4a13-a72e-9f0bc6f82029.png",
+      "PackagePath": "staticwebassets\\qrcodes\\9ad4e7ba-02d2-4a13-a72e-9f0bc6f82029.png"
+    },
+    {
+      "Id": "D:\\My Projects\\SalleDeControlle\\test2\\test2\\wwwroot\\qrcodes\\a61a55c5-df41-4264-9490-c7ae45803a2c.png",
+      "PackagePath": "staticwebassets\\qrcodes\\a61a55c5-df41-4264-9490-c7ae45803a2c.png"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.test2.props",
       "PackagePath": "build\\test2.props"
     },

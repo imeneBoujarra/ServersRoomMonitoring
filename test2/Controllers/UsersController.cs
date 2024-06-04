@@ -26,16 +26,26 @@ namespace test2.Controllers
 
         [HttpPost]
         [Route("Add users")]
-        public async Task<IActionResult> AddUser(string Name, string pass, string confirmPass, string f_n, string r, string ph, string mail)
+        public async Task<IActionResult> AddUser([FromBody] UserDto userDto)
         {
-            if (pass != confirmPass)
+            if (userDto.pass != userDto.confirmPass)
             {
                 return BadRequest("Passwords do not match");
             }
 
-            Users x = new() { Name = Name, Password = pass, first_name = f_n, Role = r, Tel = ph, email = mail };
+            Users x = new()
+            {
+                Name = userDto.Name,
+                Password = userDto.pass,
+                first_name = userDto.f_n,
+                Role = userDto.r,
+                Tel = userDto.ph,
+                email = userDto.mail
+            };
+
             await _db.User.AddAsync(x);
             _db.SaveChanges();
+
             return Ok(x);
         }
 
@@ -69,10 +79,34 @@ namespace test2.Controllers
         }
 
 
+        [HttpPut]
+        [Route("UpdateUser/{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDto userDto)
+        {
+            var user = await _db.User.SingleOrDefaultAsync(x => x.Id_user == id);
+            if (user == null)
+            {
+                return NotFound($"User Id {id} does not exist");
+            }
 
-         [HttpPost]
+            user.Name = userDto.Name;
+            user.Password = userDto.pass;
+            user.first_name = userDto.f_n;
+            user.Role = userDto.r;
+            user.Tel = userDto.ph;
+            user.email = userDto.mail;
+
+            _db.User.Update(user);
+            await _db.SaveChangesAsync();
+
+            return Ok(user);
+        }
+
+
+
+        [HttpPost]
          [Route("Login")]
-         public async Task<ActionResult<Users>> Login([FromForm] LoginModel login)
+         public async Task<ActionResult<Users>> Login([FromBody] LoginModel login)
          {
              if (!ModelState.IsValid)
              {
@@ -105,8 +139,18 @@ namespace test2.Controllers
          }
 
      }
+    public class UserDto
+    {
+        public string Name { get; set; }
+        public string pass { get; set; }
+        public string confirmPass { get; set; }
+        public string f_n { get; set; }
+        public string r { get; set; }
+        public string ph { get; set; }
+        public string mail { get; set; }
+    }
 
-     public class LoginModel
+    public class LoginModel
      {
          public string Email { get; set; }
          public string Password { get; set; }

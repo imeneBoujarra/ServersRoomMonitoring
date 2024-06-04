@@ -7,11 +7,10 @@ namespace Test.Data.Models
     {
         [Key]
         public int IdChecklist { get; set; }
-         
-        public int ServerRoomId { get; set; }
-        public ServerRoom ServerRoom { get; set; }
 
-        // Existing properties...
+        [ForeignKey(nameof(ServerRoom))]
+        public int ServerRoomId { get; set; }
+
         [MaxLength(255)]
         public string HeatPictureUrl { get; set; }
 
@@ -30,9 +29,7 @@ namespace Test.Data.Models
         [MaxLength(255)]
         public string Storage { get; set; }
 
-        // New property for QR code URL
-        [MaxLength(255)]
-        public string QRCodeUrl { get; set; }
+        public bool State { get; set; }
 
         public List<Historical> Historicals { get; set; }
 

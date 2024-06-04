@@ -22,21 +22,6 @@ namespace test2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ChecklistHistorical", b =>
-                {
-                    b.Property<int>("ChecklistIdChecklist")
-                        .HasColumnType("int");
-
-                    b.Property<string>("HistoricalsDate")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ChecklistIdChecklist", "HistoricalsDate");
-
-                    b.HasIndex("HistoricalsDate");
-
-                    b.ToTable("ChecklistHistorical");
-                });
-
             modelBuilder.Entity("Test.Data.Models.Checklist", b =>
                 {
                     b.Property<int>("IdChecklist")
@@ -55,11 +40,6 @@ namespace test2.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("QRCodeUrl")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<string>("Security")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -67,6 +47,9 @@ namespace test2.Migrations
 
                     b.Property<int>("ServerRoomId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("State")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Storage")
                         .IsRequired()
@@ -92,16 +75,17 @@ namespace test2.Migrations
 
             modelBuilder.Entity("Test.Data.Models.Historical", b =>
                 {
-                    b.Property<string>("Date")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ChecklistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Hour")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Id_user")
                         .HasColumnType("int");
@@ -111,7 +95,9 @@ namespace test2.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.HasKey("Date");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChecklistId");
 
                     b.HasIndex("Id_user");
 
@@ -129,11 +115,34 @@ namespace test2.Migrations
                     b.Property<int>("Machines")
                         .HasColumnType("int");
 
+                    b.Property<string>("QRCodeUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<int>("Room_Number")
                         .HasColumnType("int");
 
                     b.Property<int>("Servers_Numbers")
                         .HasColumnType("int");
+
+                    b.Property<bool>("VerifyBackbone")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VerifyHeat")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VerifySecurity")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VerifyStorage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VerifySwitchers")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VerifyVentilation")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id_Room");
 
@@ -182,51 +191,47 @@ namespace test2.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("ChecklistHistorical", b =>
-                {
-                    b.HasOne("Test.Data.Models.Checklist", null)
-                        .WithMany()
-                        .HasForeignKey("ChecklistIdChecklist")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Test.Data.Models.Historical", null)
-                        .WithMany()
-                        .HasForeignKey("HistoricalsDate")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Test.Data.Models.Checklist", b =>
                 {
-                    b.HasOne("Test.Data.Models.ServerRoom", "ServerRoom")
-                        .WithMany("checklists")
+                    b.HasOne("Test.Data.Models.ServerRoom", null)
+                        .WithMany("Checklists")
                         .HasForeignKey("ServerRoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ServerRoom");
                 });
 
             modelBuilder.Entity("Test.Data.Models.Historical", b =>
                 {
+                    b.HasOne("Test.Data.Models.Checklist", "Checklist")
+                        .WithMany("Historicals")
+                        .HasForeignKey("ChecklistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Test.Data.Models.Users", "User")
-                        .WithMany("historycals")
+                        .WithMany("historcals")
                         .HasForeignKey("Id_user")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Checklist");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Test.Data.Models.Checklist", b =>
+                {
+                    b.Navigation("Historicals");
                 });
 
             modelBuilder.Entity("Test.Data.Models.ServerRoom", b =>
                 {
-                    b.Navigation("checklists");
+                    b.Navigation("Checklists");
                 });
 
             modelBuilder.Entity("Test.Data.Models.Users", b =>
                 {
-                    b.Navigation("historycals");
+                    b.Navigation("historcals");
                 });
 #pragma warning restore 612, 618
         }

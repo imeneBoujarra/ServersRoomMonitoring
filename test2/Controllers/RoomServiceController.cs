@@ -1,130 +1,118 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QRCoder;
+using System;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using Test.Data;
 using Test.Data.Models;
 
 namespace test2.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RoomServiceController : ControllerBase
+    public class ServerRoomController : ControllerBase
     {
         private readonly AppDb_Context _db;
+        private readonly string _qrCodeDirectory;
 
-        public RoomServiceController(AppDb_Context db)
+        public ServerRoomController(AppDb_Context db)
         {
             _db = db;
+            _qrCodeDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "qrcodes");
         }
 
-        [HttpPost("AddRoomWithChecklist")]
-        public async Task<IActionResult> AddRoomWithChecklist([FromBody] ServerRoomChecklistModel model)
+        [HttpPost]
+        [Route("CreateServerRoom")]
+        public async Task<IActionResult> CreateServerRoom([FromBody] ServerRoomDTO serverRoomDto)
         {
-            if (model == null)
+            if (serverRoomDto == null)
             {
-                return BadRequest("Invalid data.");
+                return BadRequest("Invalid server room data.");
             }
 
             var serverRoom = new ServerRoom
             {
-                Room_Number = model.Room_Number,
-                Servers_Numbers = model.Servers_Numbers,
-                Machines = model.Machines
+                Room_Number = serverRoomDto.Room_Number,
+                Servers_Numbers = serverRoomDto.Servers_Numbers,
+                Machines = serverRoomDto.Machines,
+                VerifyHeat = serverRoomDto.VerifyHeat,
+                VerifySwitchers = serverRoomDto.VerifySwitchers,
+                VerifyBackbone = serverRoomDto.VerifyBackbone,
+                VerifyVentilation = serverRoomDto.VerifyVentilation,
+                VerifySecurity = serverRoomDto.VerifySecurity,
+                VerifyStorage = serverRoomDto.VerifyStorage
             };
 
-            var checklist = new Checklist
-            {
-                HeatPictureUrl = model.Checklist.HeatPictureUrl,
-                SwitchersPictureUrl = model.Checklist.SwitchersPictureUrl,
-                Backbone = model.Checklist.Backbone,
-                Ventilation = model.Checklist.Ventilation,
-                Security = model.Checklist.Security,
-                Storage = model.Checklist.Storage,
-                ServerRoom = serverRoom
-            };
+            string qrCodeUrl = GenerateQRCode(serverRoom.Room_Number.ToString());
+            serverRoom.QRCodeUrl = qrCodeUrl;
 
             await _db.ServersRoom.AddAsync(serverRoom);
-            await _db.Checkliste.AddAsync(checklist);
             await _db.SaveChangesAsync();
 
-            return Ok(new { ServerRoom = serverRoom, Checklist = checklist });
+            return Ok(serverRoom);
         }
 
-        [HttpPut("UpdateRoomWithChecklist/{id}")]
-        public async Task<IActionResult> UpdateRoomWithChecklist(int id, [FromBody] ServerRoomChecklistModel model)
+        [HttpGet("byqrcode")]
+        public async Task<IActionResult> GetServerRoomByQrCode(string qrCode)
         {
-            if (model == null)
+            if (string.IsNullOrEmpty(qrCode))
             {
-                return BadRequest("Invalid data.");
+                return BadRequest("QR code URL is required.");
             }
 
-            var serverRoom = await _db.ServersRoom.Include(sr => sr.checklists).FirstOrDefaultAsync(sr => sr.Id_Room == id);
+            var serverRoom = await _db.ServersRoom
+                .Include(sr => sr.Checklists)
+                .FirstOrDefaultAsync(sr => sr.Room_Number.ToString() == qrCode);
+
             if (serverRoom == null)
             {
-                return NotFound($"Server room with ID {id} not found.");
+                return NotFound("Server room not found.");
             }
 
-            // Update server room properties
-            serverRoom.Room_Number = model.Room_Number;
-            serverRoom.Servers_Numbers = model.Servers_Numbers;
-            serverRoom.Machines = model.Machines;
-
-            // Update checklist properties
-            var checklist = serverRoom.checklists.FirstOrDefault();
-            if (checklist != null)
-            {
-                checklist.HeatPictureUrl = model.Checklist.HeatPictureUrl;
-                checklist.SwitchersPictureUrl = model.Checklist.SwitchersPictureUrl;
-                checklist.Backbone = model.Checklist.Backbone;
-                checklist.Ventilation = model.Checklist.Ventilation;
-                checklist.Security = model.Checklist.Security;
-                checklist.Storage = model.Checklist.Storage;
-            }
-
-            _db.ServersRoom.Update(serverRoom);
-            _db.Checkliste.Update(checklist);
-            await _db.SaveChangesAsync();
-
-            return Ok(new { ServerRoom = serverRoom, Checklist = checklist });
+            return Ok(serverRoom);
         }
 
-        [HttpDelete("DeleteRoomWithChecklist/{id}")]
-        public async Task<IActionResult> DeleteRoomWithChecklist(int id)
+        private string GenerateQRCode(string data)
         {
-            var serverRoom = await _db.ServersRoom.Include(sr => sr.checklists).FirstOrDefaultAsync(sr => sr.Id_Room == id);
-            if (serverRoom == null)
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+
+            using (Bitmap qrCodeImage = qrCode.GetGraphic(20))
             {
-                return NotFound($"Server room with ID {id} not found.");
+                if (!Directory.Exists(_qrCodeDirectory))
+                {
+                    Directory.CreateDirectory(_qrCodeDirectory);
+                }
+
+                string fileName = $"{Guid.NewGuid()}.png";
+                string filePath = Path.Combine(_qrCodeDirectory, fileName);
+                qrCodeImage.Save(filePath, ImageFormat.Png);
+
+                return $"/qrcodes/{fileName}";
             }
-
-            var checklist = serverRoom.checklists.FirstOrDefault();
-            if (checklist != null)
-            {
-                _db.Checkliste.Remove(checklist);
-            }
-
-            _db.ServersRoom.Remove(serverRoom);
-            await _db.SaveChangesAsync();
-
-            return Ok($"Server room with ID {id} and its checklist have been deleted.");
         }
     }
 
-    public class ServerRoomChecklistModel
+    public class ServerRoomDTO
     {
         public int Room_Number { get; set; }
-        public int Servers_Numbers { get; set; }
-        public int Machines { get; set; }
-        public ChecklistModel Checklist { get; set; }
-    }
 
-    public class ChecklistModel
-    {
-        public string HeatPictureUrl { get; set; }
-        public string SwitchersPictureUrl { get; set; }
-        public string Backbone { get; set; }
-        public string Ventilation { get; set; }
-        public string Security { get; set; }
-        public string Storage { get; set; }
+        public int Servers_Numbers { get; set; }
+
+        public int Machines { get; set; }
+
+        public bool VerifyHeat { get; set; }
+
+        public bool VerifySwitchers { get; set; }
+
+        public bool VerifyBackbone { get; set; }
+
+        public bool VerifyVentilation { get; set; }
+
+        public bool VerifySecurity { get; set; }
+
+        public bool VerifyStorage { get; set; }
     }
 }

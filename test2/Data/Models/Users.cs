@@ -29,7 +29,7 @@ namespace Test.Data.Models
         [MaxLength(50)]
         public string email { get; set; }
 
-        public List <Historical> historycals { get; set; }
+        public List <Historical> historcals { get; set; }
 
     }
 

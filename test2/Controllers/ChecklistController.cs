@@ -5,6 +5,7 @@ using QRCoder;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Test.Data;
 using Test.Data.Models;
@@ -22,67 +23,93 @@ namespace test2.Controllers
             _db = db;
         }
 
-        [HttpPost("CreateChecklist")]
-        public async Task<IActionResult> CreateChecklist([FromBody] Checklist checklist)
+        [HttpPost]
+        [Route("CreateChecklist")]
+        public async Task<IActionResult> CreateChecklist([FromBody] ChecklistDto checklistDto)
         {
-            if (checklist == null)
+            if (checklistDto == null)
             {
-                return BadRequest("Invalid checklist data");
+                return BadRequest("Invalid checklist data.");
             }
 
-            // Generate QR code for the checklist
-            string qrCodeUrl = await GenerateQRCode(checklist.IdChecklist.ToString());
-            checklist.QRCodeUrl = qrCodeUrl;
+            var serverRoom = await _db.ServersRoom.FindAsync(checklistDto.ServerRoomId);
+            if (serverRoom == null)
+            {
+                return NotFound("Server room not found.");
+            }
 
-            // Save the checklist to the database
+            var checklist = new Checklist
+            {
+                ServerRoomId = checklistDto.ServerRoomId,
+                HeatPictureUrl = checklistDto.HeatPictureUrl,
+                SwitchersPictureUrl = checklistDto.SwitchersPictureUrl,
+                Backbone = checklistDto.Backbone,
+                Ventilation = checklistDto.Ventilation,
+                Security = checklistDto.Security,
+                Storage = checklistDto.Storage,
+                State = true // Set initial state
+            };
+
             await _db.Checkliste.AddAsync(checklist);
+            await _db.SaveChangesAsync();
+
+            // Retrieve current user ID (replace this with your actual user ID retrieval logic)
+            int userId = 1;
+
+            // Set pictures folder path (assuming a predefined structure)
+            string picturesFolderPath = $"/images/checklists/{checklist.IdChecklist}";
+
+            // Add historical record
+            var historical = new Historical
+            {
+                DateTime = DateTime.Now,
+                Id_user = userId,
+                ChecklistId = checklist.IdChecklist,
+                PicturesFolderPath = picturesFolderPath
+            };
+
+            await _db.Historical.AddAsync(historical);
             await _db.SaveChangesAsync();
 
             return Ok(checklist);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetChecklistById(int id)
+        public async Task<ActionResult<Checklist>> GetChecklist(int id)
         {
             var checklist = await _db.Checkliste.FindAsync(id);
+
             if (checklist == null)
             {
-                return NotFound($"Checklist with ID {id} not found");
+                return NotFound();
             }
 
             return Ok(checklist);
         }
+    }
 
-        [HttpGet("QRCode/{id}")]
-        public async Task<IActionResult> GetQRCode(int id)
-        {
-            var checklist = await _db.Checkliste.FindAsync(id);
-            if (checklist == null)
-            {
-                return NotFound($"Checklist with ID {id} not found");
-            }
 
-            string qrCodeUrl = checklist.QRCodeUrl;
-            if (string.IsNullOrEmpty(qrCodeUrl))
-            {
-                return NotFound("QR code not available for this checklist");
-            }
+        public class ChecklistDto
+    {
+        public int IdChecklist { get; set; }
 
-            // Return the QR code image URL
-            return Ok(new { QRCodeUrl = qrCodeUrl });
-        }
+        public int ServerRoomId { get; set; }
 
-        private async Task<string> GenerateQRCode(string data)
-        {
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
+        public string HeatPictureUrl { get; set; }
 
-            Bitmap qrCodeImage = qrCode.GetGraphic(20);
-            var qrCodePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "qrcodes", $"{Guid.NewGuid()}.png");
-            qrCodeImage.Save(qrCodePath);
+        public string SwitchersPictureUrl { get; set; }
 
-            return qrCodePath;
-        }
+        public string Backbone { get; set; }
+
+        public string Ventilation { get; set; }
+
+        public string Security { get; set; }
+
+        public string Storage { get; set; }
+
+        public int UserId { get; set; }
+ 
+
+
     }
 }
